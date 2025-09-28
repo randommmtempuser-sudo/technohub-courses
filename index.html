@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Techno Hub Dushanbe - IT и Digital курсы</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-placeholder {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e3c72;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .logo-text h1 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            text-align: right;
+        }
+
+        .contact-info div {
+            margin-bottom: 5px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+            margin-top: 30px; /* Сдвиг секции вниз */
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Filter Buttons */
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #1e3c72;
+            color: #1e3c72;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover {
+            background: #eef2f7;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: #1e3c72;
+            color: white;
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+        }
+
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: #2a5298;
+        }
+
+        .course-title {
+            color: #1e3c72;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .course-description {
+            margin-bottom: 20px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .course-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .detail-value {
+            color: #666;
+            text-align: right;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e74c3c;
+            text-align: center;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .register-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .contact-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .contact-title {
+            color: #1e3c72;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .contact-details {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* About Section */
+        .about-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .about-section h2 {
+            color: #1e3c72;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .about-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .contact-info {
+                text-align: center;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-btn {
+                width: 200px;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-text h1 {
+                font-size: 1.5rem;
+            }
+
+            .course-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        .section-title {
+            color: #1e3c72;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        img{
+            height: 60px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-placeholder"><img src="photo_2025-09-27_21-36-34.jpg" alt="Логотип Techno Hub"></div>
+
+                </div>
+                <div class="contact-info">
+                    <div> +992 71 044 99 99</div>
+                    <div> ул. С. Айни 50/51</div>
+                    <div>(ориентир: поворот на аэропорт)</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Courses Section -->
+        <section id="courses" class="section active">
+            <h2 class="section-title">Наши курсы</h2>
+            <p class="section-subtitle">Выберите курс, который подходит именно вам</p>
+            
+            <!-- Кнопки фильтрации -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterCourses('all', this)">Все</button>
+                <button class="filter-btn" onclick="filterCourses('programming', this)">Программирование</button>
+                <button class="filter-btn" onclick="filterCourses('design', this)">Дизайн</button>
+                <button class="filter-btn" onclick="filterCourses('kids', this)">Для детей</button>
+                <button class="filter-btn" onclick="filterCourses('sysadmin', this)">Системное администрирование</button>
+                <button class="filter-btn" onclick="filterCourses('general', this)">Общие</button>
+            </div>
+
+            <div class="courses-grid">
+                <!-- Digital Finance -->
+                <div class="course-card" data-category="general">
+                    <h3 class="course-title">Digital Finance</h3>
+                    <div class="course-description">
+                        Программа «Digital Technology» — курс, который сочетает классические финансовые знания с современными информационными технологиями. Подготовка бухгалтеров для эффективного использования цифровых инструментов.
+                    </div>
+                    <div class="course-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Продолжительность:</span>
+                            <span class="detail-value">5 месяцев</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Расписание:</span>
+                            <span class="detail-value">Вт, Чт, Сб 19:00-20:30<br>или Сб, Вс 10:00-12:00</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Для кого:</span>
+                            <span class="detail-value">Начинающие, бухгалтеры, предприниматели</span>
+                        </div>
+                    </div>
+                    <div class="price">500 сомони/месяц</div>
+                    <button class="register-btn" onclick="registerCourse()">Записаться</button>
+                </div>
+
+                <!-- AI для детей -->
+                <div class="course-card" data-category="kids">
+                    <h3 class="course-title">ИИ для детей</h3>
+                    <div class="course-description">
+                        Курс для детей 9-14 лет по изучению искусственного интеллекта. Изучение ИИ-инструментов для создания изображений, музыки, видео, основы Python и веб-разработки.
+                    </div>
+                    <div class="course-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Продолжительность:</span>
+                            <span class="detail-value">8 недель (32 часа)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Возраст:</span>
+                            <span class="detail-value">9-14 лет</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Расписание:</span>
+                            <span class="detail-value">Сб, Вс по 2 часа</span>
+                        </div>
+                    </div>
+                    <div class="price">400 сомон/месяц</div>
+                    <button class="register-btn" onclick="registerCourse()">Записаться</button>
+                </div>
+
+                <!-- 3D Max для детей -->
+                <div class="course-card" data-category="kids">
+                    <h3 class="course-title">3D Max для детей</h3>
+                    <div class="course-description">
+                        Курс для детей 10-15 лет по освоению 3D-дизайна и визуализации в 3ds Max. Изучение основ моделирования, работы со светом и материалами.
+                    </div>
+                    <div class="course-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Продолжительность:</span>
+                            <span class="detail-value">5 недель</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Возраст:</span>
+                            <span class="detail-value">10-15 лет</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Расписание:</span>
+                            <span class="detail-value">Вт, Чт, Сб в 10:00 или 11:30</span>
+                        </div>
+                    </div>
+                    <div class="price">400 сомон/месяц</div>
+                    <button class="register-btn" onclick="registerCourse()">Записаться</button>
+                </div>
+
+                <!-- Golang -->
+                <div class="course-card" data-category="programming">
+                    <h3 class="course-title">Golang</h3>
+                    <div class="course-description">
+                        5-месячный курс для начинающих разработчиков по изучению языка Go и backend-разработки. Включает конкурентное программирование, работу с БД, Docker, CI/CD.
+                    </div>
+                    <div class="course-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Продолжительность:</span>
+                            <span class="detail-value">5 месяцев</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Расписание:</span>
+                            <span class="detail-value">Пн, Ср, Пт 18:30-20:00</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Уровень:</span>
+                            <span class="detail-value">Начинающий</span>
+                        </div>
+                    </div>
+                    <div class="price">800 сомони/месяц</div>
+                    <button class="register-btn" onclick="registerCourse()">Записаться</button>
+                </div>
+
+                <!-- Web разработка -->
+                <div class="course-card" data-category="programming">
+                    <h3 class="course-title">Основы Web разработки</h3>
+                    <div class="course-description">
+                        6-месячный курс по современной веб-разработке. Первые 3 месяца: HTML, CSS, JavaScript. Следующие 3 месяца: React. Создание портфолио проектов.
+                    </div>
+                    <div class="course-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Продолжительность:</span>
+                            <span class="detail-value">6 месяцев</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Расписание:</span>
+                            <span class="detail-value">Пн, Ср, Пт 18:00-19:30</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Технологии:</span>
+                            <span class="detail-value">HTML, CSS, JS, React</span>
+                        </div>
+                    </div>
+                    <div class="price">1000 сомон/месяц</div>
+                    <button class="register-btn" onclick="registerCourse()">Записаться</button>
+                </div>
+
+                <!-- Python -->
+                <div class="course-card" data-category="programming">
+                    <h3 class="course-title">Python</h3>
+                    <div class="course-description">
+                        5-месячный курс по Python и Django. Изучение синтаксиса, работы с данными, Flask, Django, создание REST-API. 5 полноценных проектов в портфолио.
+                    </div>
+                    <div class="course-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Продолжительность:</span>
+                            <span class="detail-value">5 месяцев</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Расписание:</span>
+                            <span class="detail-value">Вт, Чт, Сб 18:20-19:50</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Проекты:</span>
+                            <span class="detail-value">5 проектов в портфолио</span>
+                        </div>
+                    </div>
+                    <div class="price">1000 сомон/месяц</div>
+                    <button class="register-btn" onclick="registerCourse()">Записаться</button>
+                </div>
+
+                <!-- Графический дизайн -->
+                <div class="course-card" data-category="design">
+                    <h3 class="course-title">Графический дизайн для начинающих</h3>
+                    <div class="course-description">
+                        Основы графического дизайна для начинающих. Изучение принципов композиции, цвета и типографики. Работа в Photoshop, Illustrator и InDesign.
+                    </div>
+                    <div class="course-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Продолжительность:</span>
+                            <span class="detail-value">2 месяца</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Расписание:</span>
+                            <span class="detail-value">Пн, Ср, Пт 18:30-20:00</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">ПО:</span>
+                            <span class="detail-value">Photoshop, Illustrator, InDesign</span>
+                        </div>
+                    </div>
+                    <div class="price">1000 сомони/месяц</div>
+                    <button class="register-btn" onclick="registerCourse()">Записаться</button>
+                </div>
+
+                <!-- Компьютерная грамотность -->
+                <div class="course-card" data-category="general">
+                    <h3 class="course-title">Основы компьютерной грамотности</h3>
+                    <div class="course-description">
+                        Курс "Современный офис и цифровые навыки" научит уверенно пользоваться компьютером, интернетом и облачными сервисами. Работа с офисными программами и ИИ-инструментами.
+                    </div>
+                    <div class="course-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Продолжительность:</span>
+                            <span class="detail-value">2 месяца (24 занятия)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Формат:</span>
+                            <span class="detail-value">8 недель × 3 занятия</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">ПО:</span>
+                            <span class="detail-value">Office, Google Workspace, ИИ</span>
+                        </div>
+                    </div>
+                    <div class="price">Уточнить стоимость</div>
+                    <button class="register-btn" onclick="registerCourse()">Записаться</button>
+                </div>
+
+                <!-- MikroTik -->
+                <div class="course-card" data-category="sysadmin">
+                    <h3 class="course-title">MikroTik (MTCNA)</h3>
+                    <div class="course-description">
+                        Курс MTCNA (MikroTik Certified Network Associate) — базовое обучение по настройке и администрированию сетевого оборудования MikroTik. Управление через Winbox и консоль.
+                    </div>
+                    <div class="course-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Сертификация:</span>
+                            <span class="detail-value">MTCNA</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Уровень:</span>
+                            <span class="detail-value">Базовый</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Включает:</span>
+                            <span class="detail-value">Лабораторные задания</span>
+                        </div>
+                    </div>
+                    <div class="price">Уточнить стоимость</div>
+                    <button class="register-btn" onclick="registerCourse()">Записаться</button>
+                </div>
+
+                <!-- Английский для детей -->
+                <div class="course-card" data-category="kids">
+                    <h3 class="course-title">Английский для детей</h3>
+                    <div class="course-description">
+                        Английский язык для начального уровня. Курс разработан специально для детей с учетом возрастных особенностей и интересов.
+                    </div>
+                    <div class="course-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Уровень:</span>
+                            <span class="detail-value">Начальный</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Расписание:</span>
+                            <span class="detail-value">3 раза в неделю (1.5 часа)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Формат:</span>
+                            <span class="detail-value">Групповые занятия</span>
+                        </div>
+                    </div>
+                    <div class="price">Уточнить стоимость</div>
+                    <button class="register-btn" onclick="registerCourse()">Записаться</button>
+                </div>
+
+                <!-- Дизайн интерьера -->
+                <div class="course-card" data-category="design">
+                    <h3 class="course-title">Дизайн Интерьера</h3>
+                    <div class="course-description">
+                        Практико-ориентированное обучение основам интерьерных стилей, планировке помещений и техническим аспектам. Освоение ArchiCad, 3ds Max, Corona и Photoshop.
+                    </div>
+                    <div class="course-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Расписание:</span>
+                            <span class="detail-value">Пн, Ср, Пт по 2 часа</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">ПО:</span>
+                            <span class="detail-value">ArchiCad, 3ds Max, Corona, Photoshop</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Результат:</span>
+                            <span class="detail-value">Полноценные дизайн-проекты</span>
+                        </div>
+                    </div>
+                    <div class="price">2000 сомони/месяц</div>
+                    <button class="register-btn" onclick="registerCourse()">Записаться</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="about-section">
+                <h2>О Techno Hub Dushanbe</h2>
+                <p>
+                    Techno Hub Dushanbe — современный образовательный центр, специализирующийся на IT и цифровых технологиях. 
+                    Мы предлагаем качественное обучение по самым востребованным направлениям: программирование, дизайн, 
+                    цифровые финансы, сетевые технологии и многое другое.
+                </p>
+                <br>
+                <p>
+                    Наша миссия — подготовить специалистов, готовых к вызовам цифровой эры. Мы сочетаем теоретические знания 
+                    с практическими навыками, что позволяет нашим студентам успешно трудоустраиваться и развивать собственные проекты.
+                </p>
+                <br>
+                <p>
+                    Преподаватели Techno Hub — это практикующие специалисты с многолетним опытом работы в IT-индустрии. 
+                    Мы используем современные методики обучения и актуальные технологии, чтобы дать студентам максимально 
+                    полезные и применимые знания.
+                </p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2 class="section-title">Контакты</h2>
+            <p class="section-subtitle">Свяжитесь с нами любым удобным способом</p>
+            
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon"></div>
+                    <h3 class="contact-title">Телефон</h3>
+                    <div class="contact-details">+992 71 044 99 99</div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon"></div>
+                    <h3 class="contact-title">Адрес</h3>
+                    <div class="contact-details">
+                        ул. С. Айни 50/51<br>
+                        (ориентир: поворот на аэропорт)<br>
+                        г. Душанбе, Таджикистан
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon"></div>
+                    <h3 class="contact-title">Время работы</h3>
+                    <div class="contact-details">
+                        Пн-Пт: 9:00 - 20:00<br>
+                        Сб-Вс: 10:00 - 18:00
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-section">
+                <h3 style="text-align: center; color: #1e3c72; margin-bottom: 20px; font-size: 1.5rem;">
+                    Записаться на курс
+                </h3>
+                <p style="text-align: center; color: #666; margin-bottom: 30px;">
+                    Позвоните нам или нажмите кнопку "Записаться" на любом курсе для регистрации онлайн
+                </p>
+                <div style="text-align: center;">
+                    <button class="register-btn" onclick="registerCourse()" style="max-width: 300px;">
+                        Записаться онлайн
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function showSection(sectionId) {
+            // Скрыть все секции
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Показать выбранную секцию
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Обновить активную кнопку
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        function filterCourses(category, element) {
+            // Управление активным состоянием кнопок
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            element.classList.add('active');
+
+            // Логика фильтрации карточек
+            const courses = document.querySelectorAll('.course-card');
+            courses.forEach(course => {
+                if (category === 'all' || course.dataset.category === category) {
+                    course.style.display = 'block';
+                } else {
+                    course.style.display = 'none';
+                }
+            });
+        }
+
+        function registerCourse() {
+            window.open(' https://l.instagram.com/?u=https%3A%2F%2Ftaplink.cc%2Ftechnohub.tj%3Ffbclid%3DPAZXh0bgNhZW0CMTEAAadx7HUuLdFawbsy0OsLdDUHHsKCZgm0HYPSoymEzFyWWaqmciztmTPAZxfQsw_aem_KrW9HalHgnEjSmCKhIbWzQ&e=AT2XEoUUhhHEwQ01CkcaElP5hOVdAUKrZF7e8JA8PcT_gWhdGZnSl2GGu1gk81Me32SVdrsp9gDSP9z_TUXMabE_yfXr1-T8K203kjfYNA', '_blank');
+        }
+    </script>
+</body>
+</html>
